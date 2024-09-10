@@ -78,6 +78,6 @@ FinFlex integrates advanced algorithms to provide efficient financial management
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/Anurag-Kumar9/finflex.git
+git clone https://github.com/Anurag-Kumar9/finFlex.git
 cd finflex
 
