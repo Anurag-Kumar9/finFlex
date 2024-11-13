@@ -1,21 +1,30 @@
-// server.js
-
+require('dotenv').config();
 const express = require('express');
-const dotenv = require('dotenv');
-
-dotenv.config();
-
+const path = require('path');
+const bodyParser = require('body-parser');
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-app.use(express.json());
+// Middleware
+app.use(bodyParser.json());
 
-// Placeholder route
+// Serve static files from the 'frontend/public' directory
+app.use(express.static(path.join(__dirname, '../frontend/public')));
+
+// Serve CSS and JS files from the 'frontend/src' directory
+app.use('/src', express.static(path.join(__dirname, '../frontend/src')));
+
+// Serve HTML file
 app.get('/', (req, res) => {
-    res.send('FinFlex Backend is running.');
+  res.sendFile(path.join(__dirname, '../frontend/public', 'index.html'));
 });
 
+// Sample endpoint that uses an environment variable
+app.get('/env', (req, res) => {
+  res.send(`Environment variable value: ${process.env.YOUR_ENV_VARIABLE}`);
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
-
