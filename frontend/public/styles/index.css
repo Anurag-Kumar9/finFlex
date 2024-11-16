@@ -1,82 +1,87 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 1em;
-    text-align: center;
-  }
-  
-  nav ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  nav ul li {
-    display: inline;
-    margin: 0 10px;
-  }
-  
-  nav ul li a {
-    color: white;
-    text-decoration: none;
-  }
-  
-  main {
-    padding: 2em;
-    padding-bottom: 3em;
-  }
-  
-  h2 {
-    color: #333;
-  }
-  
-  .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1em;
-  }
-  
-  .card {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 1em;
-    flex: 1 1 calc(33.333% - 2em);
-    box-sizing: border-box;
-    margin-bottom: 1em;
-  }
-  
-  .card h3 {
-    margin-top: 0;
-  }
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
-  .card-link {
-    text-decoration: none; 
-    color: inherit; 
-    display: block; 
-  }
+header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 1em; /* Normal padding */
+  text-align: center;
+}
 
-  .card-link:hover .card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    transform: translateY(-2px); 
-    transition: 0.3s; 
+header h1 {
+  font-size: 2.5em; /* Normal size for the header */
+}
 
-  }
-  
-  footer {
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    padding: 0.3em; /* Reduced padding for a smaller height */
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    font-size: 0.8em; /* Adjusted font size if needed */
-  }
-  
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 10px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1em; /* Normal font size for links */
+}
+
+main {
+  padding: 2em;
+  padding-bottom: 3em;
+}
+
+h2 {
+  color: #333;
+  font-size: 1.5em; /* Normal size for section titles */
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column; /* Make cards take up the full width */
+  gap: 1em;
+}
+
+.card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1em; /* Normal padding */
+  flex: 1;
+  margin-bottom: 1em;
+  font-size: 1em; /* Normal font size within cards */
+}
+
+.card h3 {
+  margin-top: 0;
+  font-size: 1.2em; /* Normal font size for card titles */
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card-link:hover .card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  transition: 0.3s;
+}
+
+footer {
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  padding: 0.3em;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  font-size: 1em; /* Normal font size for footer */
+}
