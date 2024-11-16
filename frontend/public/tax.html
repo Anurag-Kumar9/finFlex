@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Calculator</title>
+</head>
+<body>
+    <h1>Tax Calculator</h1>
+    <form id="taxForm">
+        <label for="income">Income:</label>
+        <input type="number" id="income" name="income" required><br><br>
+        
+        <label for="deductions">Deductions (comma-separated):</label>
+        <input type="text" id="deductions" name="deductions"><br><br>
+
+        <button type="submit">Calculate Tax</button>
+    </form>
+
+    <h2>Result:</h2>
+    <p id="result"></p>
+
+    <script>
+        document.getElementById('taxForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            const income = document.getElementById('income').value;
+            const deductions = document.getElementById('deductions').value.split(',').map(Number);
+            
+            const response = await fetch('/api/tax/calculate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ income, deductions })
+            });
+
+            const result = await response.json();
+            document.getElementById('result').textContent = `Total Tax: ${result.tax}`;
+        });
+    </script>
+</body>
+</html>

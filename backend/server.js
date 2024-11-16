@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const cashflowRoutes = require('./routes/cashflow');
+const taxRoutes = require('./routes/tax');
+const budgetRoutes = require('./routes/budget');
+
 
 // Middleware
 app.use(bodyParser.json());
@@ -21,8 +24,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/public', 'index.html'));
 });
 
-// Routes for expenses
+// Routes
 app.use('/api/cashflow', cashflowRoutes);
+app.use('/api/tax', taxRoutes);
+app.use('/api/budget', budgetRoutes);
 
 // Start server
 const PORT = process.env.PORT || 3001;
