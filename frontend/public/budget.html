@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Analysis</title>
+</head>
+<body>
+    <h1>Budget Analysis Tool</h1>
+    <form id="budgetForm">
+        <label for="income">Monthly Income:</label>
+        <input type="number" id="income" name="income" required><br><br>
+
+        <label for="transactions">Transactions (JSON format):</label>
+        <textarea id="transactions" name="transactions" rows="8" cols="40" placeholder='[{"amount": 100, "category": "Essentials", "description": "Groceries"}]'></textarea><br><br>
+
+        <button type="submit">Analyze Budget</button>
+    </form>
+
+    <h2>Analysis Results:</h2>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('budgetForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const income = parseFloat(document.getElementById('income').value);
+            const transactions = JSON.parse(document.getElementById('transactions').value);
+
+            const response = await fetch('/api/budget/analyze', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ income, transactions }),
+            });
+
+            const result = await response.json();
+            document.getElementById('result').innerHTML = `
+                <h3>Spending Summary</h3>
+                <p>Essentials: ${result.spendingSummary.essentials}</p>
+                <p>Wants: ${result.spendingSummary.wants}</p>
+                <p>Savings: ${result.spendingSummary.savings}</p>
+                <h3>Recurring Expenses</h3>
+                <p>${result.recurringExpenses.join(', ')}</p>
+                <h3>Recommendations</h3>
+                <p>${result.recommendations.join('<br>')}</p>
+            `;
+        });
+    </script>
+</body>
+</html>
