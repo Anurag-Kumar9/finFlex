@@ -29,7 +29,6 @@ FinFlex integrates advanced algorithms to provide efficient financial management
 
 ### Personal Finance Management
 
-- **User Authentication**: Secure user sign-up and login functionality.
 - **Expense Tracking**: Log and categorize daily expenses.
 - **Budget Creation**: Manage monthly or yearly budgets.
 - **Financial Insights**: Analytics on spending patterns.

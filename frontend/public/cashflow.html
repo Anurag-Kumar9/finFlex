@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash Flow Optimizer</title>
+    <script src="/src/js/cashflow.js" defer></script>
+</head>
+<body>
+    <h1>Cash Flow Optimizer</h1>
+    <form id="transactionForm">
+        <input type="text" id="from" placeholder="From" required>
+        <input type="text" id="to" placeholder="To" required>
+        <input type="number" id="amount" placeholder="Amount" required>
+        <button type="submit">Add Transaction</button>
+    </form>
+    <div>
+        <button id="optimizeBtn">Optimize Cash Flow</button>
+        <pre id="output"></pre>
+    </div>
+</body>
+</html>
