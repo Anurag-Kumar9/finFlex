@@ -3,8 +3,6 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
 
-// Routes
-// const expensesRoutes = require('./routes/expenses');
 const cashflowRoutes = require('./routes/cashflow');
 
 // Middleware
@@ -24,7 +22,6 @@ app.get('/', (req, res) => {
 });
 
 // Routes for expenses
-app.use('/api/expenses', expensesRoutes);
 app.use('/api/cashflow', cashflowRoutes);
 
 // Start server
