@@ -1,3 +1,4 @@
+// Add transaction event listener
 document.getElementById('transactionForm').addEventListener('submit', async (e) => {
     e.preventDefault(); // Prevent default form submission
 
@@ -20,13 +21,13 @@ document.getElementById('transactionForm').addEventListener('submit', async (e) 
             body: JSON.stringify({ from, to, amount }),
         });
 
-        // Process the response
-        const result = await response.json();
+        const result = await response.json(); // Process the response
         console.log('Server response:', result); // Log the server response
 
         if (response.ok) {
             alert('Transaction added successfully!');
             document.getElementById('transactionForm').reset(); // Reset the form fields
+            addTransactionToTable({ from, to, amount }); // Add the transaction to the table
             document.getElementById('output').textContent = 'Transaction successfully added.';
         } else {
             alert('Failed to add transaction: ' + (result.message || 'Unknown error.'));
@@ -37,6 +38,7 @@ document.getElementById('transactionForm').addEventListener('submit', async (e) 
     }
 });
 
+// Optimize cash flow event listener
 document.getElementById('optimizeBtn').addEventListener('click', async () => {
     try {
         const response = await fetch('http://localhost:3001/api/cashflow/optimize');
@@ -46,7 +48,7 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
         if (result.optimizedTransactions && result.optimizedTransactions.length > 0) {
             let output = 'Optimized Cash Flow Suggestions:\n\n';
             result.optimizedTransactions.forEach(tx => {
-                output += `${tx.from} should pay ${tx.to}: $${tx.amount}\n`;
+                output += `${tx.from} should pay ${tx.to}: $${tx.amount.toFixed(2)}\n`;
             });
             document.getElementById('output').textContent = output;
         } else {
@@ -57,3 +59,42 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
         document.getElementById('output').textContent = 'An error occurred while optimizing cash flow. Please try again.';
     }
 });
+
+// Reset transactions event listener
+document.getElementById('resetBtn').addEventListener('click', async () => {
+    try {
+        const response = await fetch('http://localhost:3001/api/cashflow/reset', { method: 'POST' });
+        if (response.ok) {
+            alert('Transactions reset successfully!');
+            document.querySelector('#transactionTable tbody').innerHTML = ''; // Clear the table
+            document.getElementById('output').textContent = 'All transactions have been reset.';
+        } else {
+            alert('Failed to reset transactions. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error resetting transactions:', error);
+        alert('An error occurred while resetting transactions. Please try again later.');
+    }
+});
+
+// Utility function to add a transaction to the table
+function addTransactionToTable(transaction) {
+    const tableBody = document.querySelector('#transactionTable tbody');
+    const row = document.createElement('tr');
+
+    // Create table cells
+    const fromCell = document.createElement('td');
+    fromCell.textContent = transaction.from;
+    const toCell = document.createElement('td');
+    toCell.textContent = transaction.to;
+    const amountCell = document.createElement('td');
+    amountCell.textContent = `$${transaction.amount.toFixed(2)}`;
+
+    // Append cells to the row
+    row.appendChild(fromCell);
+    row.appendChild(toCell);
+    row.appendChild(amountCell);
+
+    // Append the row to the table body
+    tableBody.appendChild(row);
+}

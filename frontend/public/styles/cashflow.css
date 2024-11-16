@@ -1,0 +1,137 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1em;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    margin: 0.5em 0;
+    color: #333;
+}
+
+main {
+    padding: 2em;
+}
+
+section {
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2em;
+    padding: 1.5em;
+}
+
+section h2 {
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+
+/* Form Styles */
+.transaction-form {
+    margin-bottom: 2em;
+}
+
+.form-group {
+    margin-bottom: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+input {
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 1em;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.75em 1.5em;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 1em;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.reset {
+    background-color: #f44336;
+}
+
+.reset:hover {
+    background-color: #d32f2f;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 0.75em;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Output Section */
+.output-section {
+    text-align: center;
+}
+
+pre {
+    background: #f9f9f9;
+    padding: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: left;
+    overflow: auto;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 0.5em;
+    font-size: 0.85em;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
