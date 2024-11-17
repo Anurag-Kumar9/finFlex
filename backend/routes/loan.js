@@ -43,10 +43,16 @@ class MinHeap {
             const rightChildIndex = 2 * index + 2;
             let smallest = index;
 
-            if (leftChildIndex < length && this.heap[leftChildIndex].interestRate < this.heap[smallest].interestRate) {
+            if (
+                leftChildIndex < length &&
+                this.heap[leftChildIndex].interestRate < this.heap[smallest].interestRate
+            ) {
                 smallest = leftChildIndex;
             }
-            if (rightChildIndex < length && this.heap[rightChildIndex].interestRate < this.heap[smallest].interestRate) {
+            if (
+                rightChildIndex < length &&
+                this.heap[rightChildIndex].interestRate < this.heap[smallest].interestRate
+            ) {
                 smallest = rightChildIndex;
             }
 
@@ -62,43 +68,74 @@ class MinHeap {
     }
 }
 
+// Function to calculate loan repayment
 function calculateLoanRepayment(loans, totalPayment) {
     const minHeap = new MinHeap();
-    loans.forEach(loan => minHeap.insert(loan));
+    const remainingLoans = [];
+
+    loans.forEach((loan) => {
+        if (typeof loan.amount !== 'number' || typeof loan.interestRate !== 'number') {
+            throw new Error('Invalid loan data: amount and interestRate must be numbers.');
+        }
+        if (loan.amount <= 0 || loan.interestRate < 0) {
+            throw new Error('Invalid loan data: amount must be positive and interestRate non-negative.');
+        }
+        minHeap.insert(loan);
+    });
 
     let totalRepayment = 0;
     let remainingPayment = totalPayment;
+    let paidLoans = [];
 
+    // Process loans and determine remaining ones
     while (remainingPayment > 0 && !minHeap.isEmpty()) {
         const loan = minHeap.extractMin();
         const interestPayment = loan.amount * loan.interestRate;
 
         if (remainingPayment >= loan.amount) {
+            // Fully pay off the loan
             totalRepayment += loan.amount + interestPayment;
+            paidLoans.push({ ...loan, paidAmount: loan.amount + interestPayment });
             remainingPayment -= loan.amount;
         } else {
+            // Partially pay the loan
             totalRepayment += remainingPayment + (remainingPayment * loan.interestRate);
+            paidLoans.push({ ...loan, paidAmount: remainingPayment + (remainingPayment * loan.interestRate) });
             remainingPayment = 0;
         }
 
         if (loan.amount > remainingPayment) {
             loan.amount -= remainingPayment;
-            minHeap.insert(loan);
+            remainingLoans.push(loan);
         }
     }
 
-    return totalRepayment;
+    const isFullyPaid = remainingLoans.length === 0;
+    return {
+        totalRepayment: Math.min(totalRepayment, totalPayment), // Ensure total repayment doesn't exceed total payment
+        remainingLoans,  // Loans that are still remaining
+        paidLoans,       // Loans that have been partially or fully paid off
+        isFullyPaid,     // Whether all loans are fully paid
+    };
 }
 
+
+// Route to handle the loan scheduler API
 router.post('/scheduler', (req, res) => {
-    const { loans, totalPayment } = req.body;
+    try {
+        const { loans, totalPayment } = req.body;
 
-    if (!loans || !Array.isArray(loans) || !totalPayment) {
-        return res.status(400).json({ error: 'Invalid input!' });
+        if (!Array.isArray(loans) || typeof totalPayment !== 'number' || totalPayment <= 0) {
+            return res.status(400).json({ error: 'Invalid input! Ensure loans is an array and totalPayment is a positive number.' });
+        }
+
+        const repaymentResult = calculateLoanRepayment(loans, totalPayment);
+
+        // Send the result with repayment details and loan statuses
+        res.json(repaymentResult);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
-
-    const totalRepayment = calculateLoanRepayment(loans, totalPayment);
-    res.json({ totalRepayment });
 });
 
 module.exports = router;
