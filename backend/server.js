@@ -6,6 +6,7 @@ const app = express();
 const cashflowRoutes = require('./routes/cashflow');
 const taxRoutes = require('./routes/tax');
 const budgetRoutes = require('./routes/budget');
+const loanRoutes = require('./routes/loan');
 
 
 // Middleware
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
 app.use('/api/cashflow', cashflowRoutes);
 app.use('/api/tax', taxRoutes);
 app.use('/api/budget', budgetRoutes);
+app.use('/api/loan', loanRoutes);
 
 // Start server
 const PORT = process.env.PORT || 3001;
