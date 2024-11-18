@@ -4,28 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget Analysis</title>
+    <link rel="stylesheet" href="styles/budget.css">
 </head>
 <body>
-    <h1>Budget Analysis Tool</h1>
-    <form id="budgetForm">
-        <label for="income">Monthly Income:</label>
-        <input type="number" id="income" name="income" required><br><br>
+    <header>
+        <h1>Budget Analysis Tool</h1>
+        <p>Analyze your spending and optimize your budget effortlessly.</p>
+    </header>
 
-        <label for="transactions">Transactions (JSON format):</label>
-        <textarea id="transactions" name="transactions" rows="8" cols="40" placeholder='[{"amount": 100, "category": "Essentials", "description": "Groceries"}]'></textarea><br><br>
+    <main>
+        <section>
+            <h2>Enter Your Details</h2>
+            <form id="budgetForm">
+                <div class="form-group">
+                    <label for="income">Monthly Income:</label>
+                    <input type="number" id="income" name="income" placeholder="Enter your monthly income" required>
+                </div>
 
-        <button type="submit">Analyze Budget</button>
-    </form>
+                <div id="transactionInputs">
+                    <div class="transaction-entry">
+                        <label for="amount-1">Amount:</label>
+                        <input type="number" id="amount-1" class="amount" placeholder="Enter amount" required>
 
-    <h2>Analysis Results:</h2>
-    <div id="result"></div>
+                        <label for="category-1">Category:</label>
+                        <select id="category-1" class="category" required>
+                            <option value="Essentials">Essentials</option>
+                            <option value="Wants">Wants</option>
+                            <option value="Savings">Savings</option>
+                        </select>
+
+                        <label for="description-1">Description:</label>
+                        <input type="text" id="description-1" class="description" placeholder="Description" required>
+                    </div>
+                </div>
+
+                <button type="button" id="addTransaction">Add Another Transaction</button>
+                <button type="submit">Analyze Budget</button>
+            </form>
+        </section>
+
+        <section id="analysisResults">
+            <h2>Analysis Results</h2>
+            <div id="result">
+                <!-- Dynamic results will be displayed here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 FinFlex. All rights reserved.</p>
+    </footer>
 
     <script>
+        let transactionCount = 1;
+
+        document.getElementById('addTransaction').addEventListener('click', () => {
+            transactionCount++;
+            const transactionInputs = document.getElementById('transactionInputs');
+            
+            const transactionEntry = document.createElement('div');
+            transactionEntry.classList.add('transaction-entry');
+            transactionEntry.innerHTML = `
+                <label for="amount-${transactionCount}">Amount:</label>
+                <input type="number" id="amount-${transactionCount}" class="amount" placeholder="Enter amount" required>
+
+                <label for="category-${transactionCount}">Category:</label>
+                <select id="category-${transactionCount}" class="category" required>
+                    <option value="Essentials">Essentials</option>
+                    <option value="Wants">Wants</option>
+                    <option value="Savings">Savings</option>
+                </select>
+
+                <label for="description-${transactionCount}">Description:</label>
+                <input type="text" id="description-${transactionCount}" class="description" placeholder="Description" required>
+            `;
+            transactionInputs.appendChild(transactionEntry);
+        });
+
         document.getElementById('budgetForm').addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const income = parseFloat(document.getElementById('income').value);
-            const transactions = JSON.parse(document.getElementById('transactions').value);
+            const transactionAmounts = document.querySelectorAll('.amount');
+            const transactionCategories = document.querySelectorAll('.category');
+            const transactionDescriptions = document.querySelectorAll('.description');
+
+            const transactions = [];
+            for (let i = 0; i < transactionAmounts.length; i++) {
+                const amount = parseFloat(transactionAmounts[i].value);
+                const category = transactionCategories[i].value;
+                const description = transactionDescriptions[i].value;
+
+                transactions.push({ amount, category, description });
+            }
 
             const response = await fetch('/api/budget/analyze', {
                 method: 'POST',
