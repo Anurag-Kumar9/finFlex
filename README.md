@@ -19,6 +19,11 @@ FinFlex is a comprehensive web application designed to simplify personal and ent
 2. Install the depencies:
    ```bash
    npm install
-3. Open the browser and type:
+
+3. Start the server:
+   ```bash
+   npm run start
+   
+4. Open the browser and type:
    ```bash
    http://localhost:3001/
