@@ -16,7 +16,10 @@ app.use(express.json());
 // Serve static files from 'frontend/public'
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
-app.use('/src', express.static(path.join(__dirname, '../frontend/src')));
+// Serve static files from 'frontend/assets'
+app.use('/assets', express.static(path.join(__dirname, '../frontend/assets')));
+
+//app.use('/src', express.static(path.join(__dirname, '../frontend/src')));
 
 
 
