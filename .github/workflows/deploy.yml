@@ -22,4 +22,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public # Change this to your static output directory
+          publish_dir: .frontend/public # Change this to your static output directory
