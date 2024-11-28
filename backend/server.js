@@ -31,7 +31,7 @@ app.use('/api/budget', budgetRoutes);
 app.use('/api/loan', loanRoutes);
 
 // Catch-all for other routes (to prevent 404 on Vercel)
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/public', 'index.html'));
 });
 
