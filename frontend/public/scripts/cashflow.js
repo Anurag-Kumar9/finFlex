@@ -15,7 +15,7 @@ document.getElementById('transactionForm').addEventListener('submit', async (e) 
 
     try {
         // Send request to the server
-        const response = await fetch('http://localhost:3001/api/cashflow/add', {
+        const response = await fetch('/api/cashflow/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ from, to, amount }),
@@ -41,7 +41,7 @@ document.getElementById('transactionForm').addEventListener('submit', async (e) 
 // Optimize cash flow event listener
 document.getElementById('optimizeBtn').addEventListener('click', async () => {
     try {
-        const response = await fetch('http://localhost:3001/api/cashflow/optimize');
+        const response = await fetch('/api/cashflow/optimize');
         const result = await response.json();
         console.log('Optimization response:', result); // Log the optimization response
 
@@ -63,7 +63,7 @@ document.getElementById('optimizeBtn').addEventListener('click', async () => {
 // Reset transactions event listener
 document.getElementById('resetBtn').addEventListener('click', async () => {
     try {
-        const response = await fetch('http://localhost:3001/api/cashflow/reset', { method: 'POST' });
+        const response = await fetch('/api/cashflow/reset', { method: 'POST' });
         if (response.ok) {
             alert('Transactions reset successfully!');
             document.querySelector('#transactionTable tbody').innerHTML = ''; // Clear the table

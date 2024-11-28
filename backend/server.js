@@ -33,7 +33,7 @@ app.use('/api/budget', budgetRoutes);
 app.use('/api/loan', loanRoutes);
 
 // Start server
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
